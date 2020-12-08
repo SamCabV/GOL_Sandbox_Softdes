@@ -317,12 +317,13 @@ def play_round(surface, grid, alpha = [2,3],delta = [3], GORB = 0):
 
     if GORB == 0:
         sz = 8
-        test = copy.deepcopy(grid)
+        #test = copy.deepcopy(grid)
+        #test = copy.copy(grid)
         size = grid.shape
         new_grid = make_grid(size[0],size[1])
         for i in range(size[0]-2):
             for j in range(size[1]-2):            
-                new_grid[i+1][j+1] = evaluate(i+1,j+1,test,alpha,delta)
+                new_grid[i+1][j+1] = evaluate(i+1,j+1,grid,alpha,delta)
         for j, tile in enumerate(new_grid):
             for i, tile_contents in enumerate(tile):
                 myrect = pygame.Rect(i*sz,j*sz,sz,sz)
@@ -331,14 +332,15 @@ def play_round(surface, grid, alpha = [2,3],delta = [3], GORB = 0):
         return new_grid
     if GORB == 1:
         sz = 8
-        test = copy.deepcopy(grid)
+        #test = copy.deepcopy(grid)
+        #test = copy.copy(grid)
         size = grid.shape
         new_grid = make_grid(size[0],size[1])
         for i in range(size[0]-2):
             for j in range(size[1]-2):
                 alpha_rand = random.sample(range(0,8),random.randint(0,8))
                 delta_rand = random.sample(range(0,8),random.randint(0,8))
-                new_grid[i+1][j+1] = evaluate(i+1,j+1,test,alpha_rand,delta_rand)
+                new_grid[i+1][j+1] = evaluate(i+1,j+1,grid,alpha_rand,delta_rand)
         for j, tile in enumerate(new_grid):
             for i, tile_contents in enumerate(tile):
                 myrect = pygame.Rect(i*sz,j*sz,sz,sz)
