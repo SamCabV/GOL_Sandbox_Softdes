@@ -19,6 +19,7 @@ FONT = pygame.font.Font(None, 32)
 
 def user_inputs():   
     #Attempt to commit
+    #Reset Commit
     pygame.init()
     screen = pygame.display.set_mode((640, 480))
 
