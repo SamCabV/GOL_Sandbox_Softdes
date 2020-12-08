@@ -18,8 +18,17 @@ COLOR_ACTIVE = pygame.Color('dodgerblue2')
 FONT = pygame.font.Font(None, 32)
 
 def user_inputs():   
-    #Attempt to commit
-    #Reset Commit
+    '''
+    Draws UI to prompt user to input intial model parameters and mode
+
+    Args: 
+        None
+    Returns:
+        output: List containing three values,
+            index 0: Game Mode Int from 0-2
+            index 1: String number list for Alpha Val
+            index 2: String Number list for Delta Val
+    '''
     pygame.init()
     screen = pygame.display.set_mode((640, 480))
 
