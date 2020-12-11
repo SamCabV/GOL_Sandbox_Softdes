@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.pyplot import figure
 import string
-import pandas as pd
 import matplotlib
 import matplotlib.animation as animation
 import copy
@@ -21,19 +20,19 @@ def user_inputs():
     #Attempt to commit
     #Reset Commit
     pygame.init()
-    screen = pygame.display.set_mode((640, 480))
-
-
+    screen = pygame.display.set_mode((1215, 600))
+    diagram = pygame.image.load(r'diagram.jpg')
+    text = pygame.image.load(r'text.jpg')
     clock = pygame.time.Clock()
     game_mode = 0 # 0 = GOL, 1 = GORB, 2 = Custom
-    input_box1 = InputBox(450, 325, 160, 32)
-    input_box2 = InputBox(450, 375, 160, 32)
-    text_box1 = TextBox(360, 325, 90, 32,"Input α:")
-    text_box2 = TextBox(360, 375, 90, 32,"Input δ:")
-    gol_switch = button(COLOR_ACTIVE, 50, 225, 150, 50, "Play GOL") 
-    gorb_switch = button(COLOR_INACTIVE, 250, 225, 150, 50, "Play GORB") 
-    custom_switch = button(COLOR_INACTIVE, 450, 225, 150, 50, "Play Custom")
-    finish_switch = button(COLOR_INACTIVE, 50, 325, 300, 80, "Start Game")
+    input_box1 = InputBox(450, 500, 160, 32)
+    input_box2 = InputBox(450, 550, 160, 32)
+    text_box1 = TextBox(360, 500, 90, 32,"Input α:")
+    text_box2 = TextBox(360, 550, 90, 32,"Input δ:")
+    gol_switch = button(COLOR_ACTIVE, 50, 400, 160, 60, "Play GOL") 
+    gorb_switch = button(COLOR_INACTIVE, 250, 400, 160, 60, "Play GORB") 
+    custom_switch = button(COLOR_INACTIVE, 450, 400, 160, 60, "Play Custom")
+    finish_switch = button(COLOR_INACTIVE, 50, 500, 300, 80, "Start Game")
     
     input_boxes = [input_box1, input_box2]
     boxes = [input_box1, input_box2, text_box1, text_box2]
@@ -120,7 +119,8 @@ def user_inputs():
             box.draw(screen)
         for switch in switches:
             switch.draw(screen)
-
+        screen.blit(diagram,(0,0))
+        screen.blit(pygame.transform.rotozoom(text,0,1.2),(640,0))
         pygame.display.flip()
         clock.tick(30)
 
@@ -215,7 +215,6 @@ class TextBox:
 
 def draw(dimx, dimy):
 
-    cellsize = 8
     sz = 8
        
     vdimx = dimx-2
@@ -227,7 +226,7 @@ def draw(dimx, dimy):
     pygame.init()
 
     # Set the HEIGHT and WIDTH of the screen
-    surface = pygame.display.set_mode((vdimx * cellsize, vdimy * cellsize))
+    surface = pygame.display.set_mode((vdimx * sz, vdimy * sz))
     # Set title of screen
     pygame.display.set_caption("Array Backed Grid")
 
@@ -286,27 +285,67 @@ def draw_grid(surface, dimy, dimx):
         new_width = round(i*sz)
         pygame.draw.line(surface, col_alive, (0,new_height), (10000,new_height),1)
         pygame.draw.line(surface, col_alive, (new_width,0), (new_width,10000),1)
-def game(dimx, dimy, cellsize,grid,alpha = [2,3], delta = [3],GORB = 0):
+def game(dimx, dimy, sz,grid,alpha = [2,3], delta = [3],GORB = 0):
     pygame.init()
     vdimx = dimx-2
-    vdimy = dimy -2
-    surface = pygame.display.set_mode((vdimx * cellsize, vdimy * cellsize))
+    vdimy = dimy-2
+    surface = pygame.display.set_mode((vdimx * sz, vdimy * sz))
     pygame.display.set_caption("John Conway's Game of Life")
-    
+    counter = 0
+    auto_play = 0
     cells = grid
     clock = pygame.time.Clock()
-
+    game_grids = []
+    game_grids.append(cells)
+    if GORB == 0:
+        for i in range(200):
+            cells = play_round(surface, cells,alpha,delta, GORB)
+            game_grids.append(cells)
+    else:
+        alpha = random.sample(range(0,8),random.randint(0,8))
+        delta = random.sample(range(0,8),random.randint(0,8))
+        for i in range(100):
+            cells = play_round(surface, cells,alpha,delta, GORB)
+            game_grids.append(cells)
+    #print("ready to go")
+    draw_board(surface, game_grids[0],game_grids[0].shape)
+    clock.tick(60)
+    pygame.display.update()
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return
-        surface.fill(col_grid)
-        
-        cells = play_round(surface, cells,alpha,delta, GORB)
-        clock.tick(60)
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                        counter += 1
+                        pygame.time.delay(5)
+                if event.key == pygame.K_LEFT:
+                        counter -= 1
+                        pygame.time.delay(5)
+                if event.key == pygame.K_SPACE:
+                    auto_play = not(auto_play)
+        if auto_play == 1:
+            counter += 1    
+            pygame.time.delay(5)
+        if counter+1 > len(game_grids):
+            game_grids.append(play_round(surface,game_grids[-1],alpha,delta, GORB))
+        if counter < 0:
+            counter = 0
+        if counter < len(game_grids):
+            surface.fill(col_grid)
+            draw_board(surface, game_grids[counter],game_grids[counter].shape)
+            clock.tick(60)
+            pygame.display.update()
 
-        pygame.display.update()
+def draw_board(surface, new_grid,size):
+    sz = 8
+    for j, tile in enumerate(new_grid):
+            for i, tile_contents in enumerate(tile):
+                myrect = pygame.Rect(i*sz,j*sz,sz,sz)
+                pygame.draw.rect(surface, map_color(tile_contents), myrect)
+    draw_grid(surface,size[0],size[1])
+    return
 
 def map_color(cell):
 
@@ -317,38 +356,12 @@ def map_color(cell):
     return col
 def play_round(surface, grid, alpha = [2,3],delta = [3], GORB = 0):
 
-    if GORB == 0:
-        sz = 8
-        #test = copy.deepcopy(grid)
-        #test = copy.copy(grid)
-        size = grid.shape
-        new_grid = make_grid(size[0],size[1])
-        for i in range(size[0]-2):
-            for j in range(size[1]-2):            
-                new_grid[i+1][j+1] = evaluate(i+1,j+1,grid,alpha,delta)
-        for j, tile in enumerate(new_grid):
-            for i, tile_contents in enumerate(tile):
-                myrect = pygame.Rect(i*sz,j*sz,sz,sz)
-                pygame.draw.rect(surface, map_color(tile_contents), myrect)
-        draw_grid(surface,size[0],size[1])
-        return new_grid
-    if GORB == 1:
-        sz = 8
-        #test = copy.deepcopy(grid)
-        #test = copy.copy(grid)
-        size = grid.shape
-        new_grid = make_grid(size[0],size[1])
-        for i in range(size[0]-2):
-            for j in range(size[1]-2):
-                alpha_rand = random.sample(range(0,8),random.randint(0,8))
-                delta_rand = random.sample(range(0,8),random.randint(0,8))
-                new_grid[i+1][j+1] = evaluate(i+1,j+1,grid,alpha_rand,delta_rand)
-        for j, tile in enumerate(new_grid):
-            for i, tile_contents in enumerate(tile):
-                myrect = pygame.Rect(i*sz,j*sz,sz,sz)
-                pygame.draw.rect(surface, map_color(tile_contents), myrect)
-        draw_grid(surface,size[0],size[1])
-        return new_grid
+    size = grid.shape
+    new_grid = make_grid(size[0],size[1])
+    for i in range(size[0]-2):
+        for j in range(size[1]-2):            
+            new_grid[i+1][j+1] = evaluate(i+1,j+1,grid,alpha,delta)
+    return new_grid
 def evaluate(n,m,grid,alpha,delta):
     an = n
     am = m
@@ -382,4 +395,32 @@ def make_grid(n,m):
 def populate_grid(keyn, keym, grid):
     grid[keyn+2, keym+2] = 1
     return grid
+
+def main():
+    while True:
+        outputs = user_inputs()
+
+        if outputs[0] == 0:
+            grid = draw(100,100)
+            game(100,100, 8,grid)
+        #int(tuple(outputs[1])[1])
+        if outputs[0] == 1:
+            grid = draw(100,100)
+            game(100,100, 8,grid,[],[],1)
+
+
+        if outputs[0] == 2:
+            alpha_str = outputs[1].split(",")
+            delta_str = outputs[2].split(",")
+            alpha = []
+            delta = []
+            for i in alpha_str:
+                alpha.append(int(i))
+            for i in delta_str:
+                delta.append(int(i))
+            grid = draw(100,100)
+            game(100,100, 8,grid,alpha,delta)
+if __name__ == "__main__":
+    main()
+    pygame.quit
     
