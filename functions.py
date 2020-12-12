@@ -30,11 +30,12 @@ def user_inputs():
             index 2: String Number list for Delta Val
     '''
     pygame.init()
-    surface = pygame.display.set_mode((1215, 600))
-    diagram = pygame.image.load(r'diagram.jpg') # Moore Diagram Image 
-    text = pygame.image.load(r'text.jpg') # Wall of text image
+    surface = pygame.display.set_mode((1150, 600))
+    diagram = pygame.image.load(r'data/diagram.jpg') # Moore Diagram Image 
+    text = pygame.image.load(r'data/text.jpg') # Wall of text image
     clock = pygame.time.Clock()
     game_mode = 0 # 0 = GOL, 1 = GORB, 2 = Custom
+
 
     # Starts up a bunch of the text boxes and buttons
     input_box1 = InputBox(450, 500, 160, 32)
@@ -44,13 +45,14 @@ def user_inputs():
     gol_switch = button(COLOR_ACTIVE, 50, 400, 160, 60, "Play GOL") 
     gorb_switch = button(COLOR_INACTIVE, 250, 400, 160, 60, "Play GORB") 
     custom_switch = button(COLOR_INACTIVE, 450, 400, 160, 60, "Play Custom")
-    finish_switch = button(COLOR_INACTIVE, 50, 500, 300, 80, "Start Game")
+    finish_switch = button(COLOR_INACTIVE, 50, 500, 130, 80, "Start Draw")
+    soup_switch = button(COLOR_INACTIVE, 200, 500, 130, 80, "Start Soup")
     
     # Put all the text boxes and buttons into lists for 
     # easy drasurfaceg
     input_boxes = [input_box1, input_box2]
     boxes = [input_box1, input_box2, text_box1, text_box2]
-    switches = [gol_switch,gorb_switch,custom_switch,finish_switch]
+    switches = [gol_switch,gorb_switch,custom_switch,finish_switch,soup_switch]
     done = False
 
     # Input Loop Runs until closed or 
@@ -85,7 +87,11 @@ def user_inputs():
                         game_mode = 2
                 
                 if finish_switch.isOver(pos):
-                    output = [game_mode, input_box1.text, input_box2.text]
+                    output = [game_mode, input_box1.text, input_box2.text,0]
+                    pygame.quit()
+                    return output
+                if soup_switch.isOver(pos):
+                    output = [game_mode, input_box1.text, input_box2.text,1]
                     pygame.quit()
                     return output
                 if game_mode == 0:
@@ -107,6 +113,11 @@ def user_inputs():
                     finish_switch.color = COLOR_ACTIVE
             else:
                     finish_switch.color = COLOR_INACTIVE
+            if soup_switch.isOver(pos):
+                    soup_switch.color = COLOR_ACTIVE
+            else:
+                    soup_switch.color = COLOR_INACTIVE
+            
             
             # Handle events in boxes
             for box in input_boxes:
@@ -118,8 +129,8 @@ def user_inputs():
             box.draw(surface)
         for switch in switches:
             switch.draw(surface)
-        surface.blit(diagram,(0,0))
-        surface.blit(pygame.transform.rotozoom(text,0,1.2),(640,0))
+        surface.blit(pygame.transform.rotozoom(diagram,0,.83),(0,0))
+        surface.blit(pygame.transform.rotozoom(text,0,.95),(640,0))
         pygame.display.flip()
         clock.tick(30)
 
@@ -305,6 +316,10 @@ class TextBox:
         # Draw the rect.
         pygame.draw.rect(surface, self.color, self.rect, 2)
 
+def draw_rand(dimx, dimy):
+    grid = np.random.randint(0,2,(dimx,dimy))
+    return grid
+
 def draw(dimx, dimy):
     '''
     Creates and displays a drawable grid
@@ -341,7 +356,7 @@ def draw(dimx, dimy):
     surface = pygame.display.set_mode((vdimx * sz, vdimy * sz))
     
     # Set Title of surface to instructions
-    pygame.display.set_caption("Please Draw Your Initial Conditions")
+    pygame.display.set_caption("Please Draw Your Initial Conditions, Press Space when done")
 
     # Loop until the user clicks the close button
     done = False
@@ -354,8 +369,11 @@ def draw(dimx, dimy):
         for event in pygame.event.get():  
             if event.type == pygame.QUIT:  # Handle closing surface
                 done = True  # break loop when done
-            elif event.type == pygame.MOUSEBUTTONDOWN:
 
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE: # Handle Space quit 
+                    done = True  # break loop when done
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 
                 # Change the x/y surface coordinates to grid descrete
@@ -391,7 +409,7 @@ def draw(dimx, dimy):
         # Display Changes in surface
         pygame.display.flip()
 
-    # Make sure we ac tually quit if we break the loop
+    # Make sure we actually quit if we break the loop
     pygame.quit()
 
     # Output Drawn State
@@ -451,19 +469,22 @@ def game(dimx, dimy, sz,grid,alpha = [2,3], delta = [3],GORB = 0):
     '''
     # Set up a bunch of variables
     pygame.init()
-
+    loading = pygame.image.load(r'data/loading.jpg')
     # Crop Display
     vdimx = dimx-2
     vdimy = dimy-2
     surface = pygame.display.set_mode((vdimx * sz, vdimy * sz))
 
-    pygame.display.set_caption("Cellular Automaton Simulation")
+    pygame.display.set_caption("Cellular Automaton Simulation, Space to Pause or Play, Left and Right Arrow Keys to Step")
 
     counter = 0 # current position of sim in list of positions 
     auto_play = 0 # flag for "auto-play" of sim 
-    
     clock = pygame.time.Clock()
-
+    
+    # Set loading Screen
+    surface.fill((30,30,48))
+    surface.blit(pygame.transform.rotozoom(loading,0,.6),(0,0))
+    pygame.display.update()
     # list that holds all game states calulcated
     # done this way so player can step back in time
     game_grids = []
@@ -472,14 +493,14 @@ def game(dimx, dimy, sz,grid,alpha = [2,3], delta = [3],GORB = 0):
     # Pre-generate boardstates to make game 
     # experience more smooth
     if GORB == 0:
-        for i in range(150):
+        for i in range(200):
             game_grids.append(play_round(game_grids[-1],alpha,delta))
 
     # because GORB is unpredictable, generate less states to prevent crashes
     else:
         alpha = random.sample(range(0,8),random.randint(0,8))
         delta = random.sample(range(0,8),random.randint(0,8))
-        for i in range(100):
+        for i in range(150):
             game_grids.append(play_round(game_grids[-1],alpha,delta))
     
     # Debug code for probing crashes:
@@ -509,7 +530,7 @@ def game(dimx, dimy, sz,grid,alpha = [2,3], delta = [3],GORB = 0):
                 # Set outplay on and off
                 if event.key == pygame.K_SPACE:
                     auto_play = not(auto_play)
-        
+
         # If outplay, scrub forward a step at a
         # time with 5ms breaks
         if auto_play == 1:
@@ -517,7 +538,7 @@ def game(dimx, dimy, sz,grid,alpha = [2,3], delta = [3],GORB = 0):
             pygame.time.delay(5)
         
         # Generate next state if it hasn't been generated yet
-        if counter+1 > len(game_grids): 
+        if counter+10 > len(game_grids): 
             game_grids.append(play_round(game_grids[-1],alpha,delta))
         
         # Prevent player from going into negative indexes to
@@ -734,47 +755,3 @@ def populate_grid(keyn, keym, grid):
     """
     grid[keyn+2, keym+2] = 1
     return grid
-
-def main():
-    """
-    Main function
-
-    Ties all the the funcitons together, 
-    prompting user for input game mode,
-    then for user to draw, 
-    then for user to scrub through game boards
-    """
-    while True:
-        # Take Input Conditions
-        outputs = user_inputs()
-
-        # depeding on inputs appropriately
-        # instantiates functions
-        # Play Original GOL
-        if outputs[0] == 0:
-            grid = draw(100,100)
-            game(100,100, 8,grid)
-        #int(tuple(outputs[1])[1])
-
-        # Play GORB
-        if outputs[0] == 1:
-            grid = draw(100,100)
-            game(100,100, 8,grid,[],[],1)
-
-        # Play Custom Game
-        if outputs[0] == 2:
-            # Parse string of custom rules
-            alpha_str = outputs[1].split(",")
-            delta_str = outputs[2].split(",")
-            alpha = []
-            delta = []
-            for i in alpha_str:
-                alpha.append(int(i))
-            for i in delta_str:
-                delta.append(int(i))
-            grid = draw(100,100)
-            game(100,100, 8,grid,alpha,delta)
-if __name__ == "__main__":
-    main()
-    pygame.quit
-    
