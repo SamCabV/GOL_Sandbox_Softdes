@@ -23,7 +23,7 @@ Originally inspired by the desire to implement [Conway's Game of Life](https://e
 
 <img src="website_stuff/UI.JPG" width="500" height="165" />
 
-### Navigating the program is simple, once loaded chooe between original GOL, GORB which stands for Game of Random Buisness, which just implements a ruleset randomly, and Custom where you can input (ALPHA) (or how many neihbors it takes for a live cell to survive a generation) and (DELTA) (or how many neihbors it takes for a dead cell to come to life), these values are explained more in detail later in the website. 
+### Navigating the program is simple, once loaded chooe between original GOL, GORB which stands for Game of Random Buisness, which just implements a ruleset randomly, and Custom where you can input α (or how many neihbors it takes for a live cell to survive a generation) and δ (or how many neihbors it takes for a dead cell to come to life), these values are explained more in detail later in the website. 
 
 ### Start Soup starts a randomized board, start draw starts a blank board for a user to draw on which is as simple as: 
 
