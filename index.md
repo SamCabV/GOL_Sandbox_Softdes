@@ -61,7 +61,7 @@ Now that we have defined a cell, we can abstract it and look at it as a nine-inp
 
 Now we can define a GOL board as a grid of cells, who are all connected to each cell they are adjacent to, such that for an **MxN** grid, with each cell defined as a set of points **(m,n)**, we can now define a grid as:
 
-<img src="website_stuff/grid.JPG" width="1000" height="500" />
+<img src="website_stuff/grid.JPG" width="1000" height="700" />
 
 This definition is also helpful for the creation of each cell as now the inputs for a given cell **(m,n)** are defined as **(m-1,n+1),(m,n+1),(m+1,n+1),(m+1,n),(m+1,n-1),(m,n-1),(m-1,n-1),(m-1,n)**.
 
