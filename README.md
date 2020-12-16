@@ -2,9 +2,7 @@
 
 Final Project for Software Design Class at Olin College of Engineering
 
-<img src="website_stuff/blocks.gif" width="200" height="200" />
-<img src="website_stuff/growth.gif" width="200" height="200" />
-<img src="website_stuff/gol.gif" width="200" height="200" />
+<img src="website_stuff/blocks.gif" width="200" height="200" /> <img src="website_stuff/growth.gif" width="200" height="200" /> <img src="website_stuff/gol.gif" width="200" height="200" />
 
  The aim of this project is to create a sand-box enviorment where a user can not only experience the usual cellular automaton of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) but also offer the ability for a user to implement custom rulesets in addition to a few other nice custom features. For more info about the project and details on the mathematical backbone of the implementation check the [website out](https://samcabv.github.io/GOL_Sandbox_Softdes/). 
  
