@@ -17,7 +17,7 @@ Originally inspired by the desire to implement [Conway's Game of Life](https://e
 3. Any live cell with more than three live neighbours dies, as if by overpopulation.
 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction
 
-Simple rules like this lead to beautiful and complex patterns and behavior, known as "emergent behaviors" of the system. The idea of this sandbox is to let a user not only explore GOL, but also implement their own conditions for cells to be born and die.
+### Simple rules like this lead to beautiful and complex patterns and behavior, known as "emergent behaviors" of the system. The idea of this sandbox is to let a user not only explore GOL, but also implement their own conditions for cells to be born and die.
 
 ## User Interface
 
@@ -45,19 +45,19 @@ Simple rules like this lead to beautiful and complex patterns and behavior, know
 
 <img src="website_stuff/State.JPG" width="500" height="250" />
 
-### Moore Automaton Diagram 
+## Moore Automaton Diagram 
 
 ### Since we are dealing with a simple binary state machine, it could be useful to take this flow diagram and convert it into a moore automaton [(more details about this mathematical tool)](https://en.wikipedia.org/wiki/Moore_machine) , in which we define two states, dead and alive, with output of 0 and 1 respectivly and who transition based on the rules laid in the previous diagram, as such: 
 
 <img src="website_stuff/moore_gol.JPG" width="500" height="225" />
 
-### Abstracted Cell Diagram 
+## Abstracted Cell Diagram 
 
 ### Now that we have defined a cell, we can abstract it and look at it as a nine-input function, these being the state of each of its neighbors, and its own state, as such: 
 
 <img src="website_stuff/cell.JPG" width="500" height="250" />
 
-### Grid Diagram 
+## Grid Diagram 
 
 ### Now we can define a GOL board as a grid of cells, who are all connected to each cell they are adjacent to, such that for an **MxN** grid, with each cell defined as a set of points **(m,n)**, we can now define a grid as:
 
