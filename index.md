@@ -1,4 +1,4 @@
-## Cellular Automaton Sandbox
+## Welcome to My Custom-Ruleset Cellular Automaton Sandbox 
 
 You can use the [editor on GitHub](https://github.com/SamCabV/GOL_Sandbox_Softdes/edit/main/index.md) to maintain and preview the content for your website in Markdown files.
 
