@@ -73,7 +73,12 @@ Originally inspired by the desire to implement [Conway's Game of Life](https://e
 
 ### Now for any set of integers between 0-8 α defines the number of neihbors a live cell must have to live to another generation and δ represents the number of neihbors a dead cell must have to be born. It is important to mention the choice for α and δ are totally arbitary, I just like how the symbols look :^).  
 
+## Do you want to try the program out? 
+
+[Here is the link to the Github Repo with all the code](https://github.com/SamCabV/GOL_Sandbox_Softdes)
+
+[Here is the README with instruction on how to run the code](https://github.com/SamCabV/GOL_Sandbox_Softdes/blob/main/README.md)
 
 ### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Wanna know more about me? Check out my portfolio [here](https://scabreravalencia.myportfolio.com/), my [github](https://github.com/SamCabV), hit me up at samuel.cabreraval@gmail.com 
