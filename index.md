@@ -7,9 +7,9 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 ### Markdown
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-<img src="website_stuff/blocks.gif" width="40" height="40" />
-<img src="website_stuff/growth.gif" width="40" height="40" />
-<img src="website_stuff/gol.gif" width="40" height="40" />
+<img src="website_stuff/blocks.gif" width="200" height="200" />
+<img src="website_stuff/growth.gif" width="200" height="200" />
+<img src="website_stuff/gol.gif" width="200" height="200" />
 
 ```markdown
 Syntax highlighted code block
