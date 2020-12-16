@@ -1,15 +1,16 @@
 ## Welcome to My Custom-Ruleset Cellular Automaton Sandbox 
 
-You can use the [editor on GitHub](https://github.com/SamCabV/GOL_Sandbox_Softdes/edit/main/index.md) to maintain and preview the content for your website in Markdown files.
+Originally inspired by the desire to implement [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL) in pygame, this project grew to encompass not only Game of Life but gives the user ability to implement similar cellular automaton rule sets in-app. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Here Are Some Cool Examples of What Sort of Emergent Behaviors GOL and other Cullular Automaton this program enables the user to create
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+<img src="website_stuff/blocks.gif" width="200" height="200" />
+<img src="website_stuff/growth.gif" width="200" height="200" />
+<img src="website_stuff/gol.gif" width="200" height="200" />
 
 ```markdown
 Syntax highlighted code block
+
 
 # Header 1
 ## Header 2
