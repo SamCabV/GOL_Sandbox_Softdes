@@ -10,6 +10,8 @@ Markdown is a lightweight and easy-to-use syntax for styling your writing. It in
 
 ```markdown
 Syntax highlighted code block
+![Alt Text](website_stuff/og_gol.gif)
+![Alt Text](website_stuff/growth.gif)
 ![Alt Text](website_stuff/blocks.gif)
 
 # Header 1
