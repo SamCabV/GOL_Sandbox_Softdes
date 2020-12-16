@@ -29,7 +29,8 @@ Final Project for Software Design Class at Olin College of Engineering
   
   ### Running the program
   
-  Once all the dependancies are set, clone this repository using
+  Once all the dependancies are set, clone this repository using:
+  
   `git clone https://github.com/SamCabV/GOL_Sandbox_Softdes.git`
   
   Once this is done, to run the program simply type into your terminal:
