@@ -2,7 +2,7 @@
 
 Originally inspired by the desire to implement [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) (GOL) in pygame, this project grew to encompass not only Game of Life but gives the user ability to implement similar cellular automaton rule sets in-app. 
 
-# Here Are Some Cool Examples of What Sort of Emergent Behaviors GOL and other Cullular Automaton this program enables the user to create
+### Here Are Some Cool Examples of What Sort of Emergent Behaviors GOL and other Cullular Automaton this program enables the user to create
 
 <img src="website_stuff/blocks.gif" width="200" height="200" />
 <img src="website_stuff/growth.gif" width="200" height="200" />
