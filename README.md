@@ -15,6 +15,7 @@ Final Project for Software Design Class at Olin College of Engineering
  The script was written on python so it follows that you'd need it to run it,
  
   `$ sudo apt-get update`
+  
   `$ sudo apt-get install python3.8`
  
  This is a nice guide on how to set it up if you're new [here](https://docs.python-guide.org/starting/install3/linux/)
