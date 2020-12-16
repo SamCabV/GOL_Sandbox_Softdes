@@ -34,6 +34,7 @@ Final Project for Software Design Class at Olin College of Engineering
   
   Once this is done, to run the program simply type into your terminal:
   
+  
   `$ python3 main.py`
   
   Instructions on interacting the program are found in the splash-screen of the program once its booted up. 
