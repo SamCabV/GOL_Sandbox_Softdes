@@ -27,13 +27,13 @@ Originally inspired by the desire to implement [Conway's Game of Life](https://e
 
 ### Start Soup starts a randomized board, start draw starts a blank board for a user to draw on which is as simple as: 
 
-<img src="website_stuff/draw.gif" width="500" height="500" />
+<img src="website_stuff/draw.gif" width="250" height="250" />
 
 ### click to draw a live cell, click on a live cell to "delete" it. Once done simply press space and your set.
 
 ### Once loaded, space will play and pause the simulation, and left and right arrow keys enable a user to step one generation forward and backwards at a time, which leads to some pretty cool play-rewind visuals like this: 
 
-<img src="website_stuff/mess.gif" width="500" height="500" />
+<img src="website_stuff/mess.gif" width="250" height="250" />
 
 ## How does this all work? 
 
